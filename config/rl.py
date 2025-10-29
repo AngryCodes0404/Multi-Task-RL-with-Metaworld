@@ -53,5 +53,4 @@ class GradientBasedMetaLearningTrainingConfig(MetaLearningTrainingConfig):
 
 
 @dataclass(frozen=True)
-class RNNBasedMetaLearningTrainingConfig(MetaLearningTrainingConfig):
-    ...
+class RNNBasedMetaLearningTrainingConfig(MetaLearningTrainingConfig): ...
