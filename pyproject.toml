@@ -29,7 +29,7 @@ dev = ["debugpy>=1.8.9", "py-spy>=0.4.0", "pytest>=8.3.4", "ruff>=0.8.2"]
 cpu = ["jax<0.7.0"]
 # https://github.com/jax-ml/jax/issues/27062
 metal = ["jax<=0.5.0", "jax-metal>=0.1.0; sys_platform == 'darwin'"]
-cuda12 = ["jax[cuda12]<0.7.0"]
+cuda12 = ["jax[cuda12]<0.8.0"]
 tpu = ["jax[tpu]<0.7.0"]
 testing = [
     "chex>=0.1.89",
