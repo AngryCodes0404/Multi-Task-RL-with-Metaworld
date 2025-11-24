@@ -15,39 +15,39 @@ RNNState = Float[np.ndarray, "... rnn_state_dim"]
 LayerActivations = Float[Array, "batch_size layer_dim"]
 
 type LogDict = dict[
-    str, float | Float[Array, ""] | Any
+    str, float | Float[Array, [0.0]] | Any
 ]  # Histogram will be imported where needed
 type AuxPolicyOutputs = dict[str, npt.NDArray]
-type LayerActivationsDict = dict[str, Float[Array, "batch_size layer_dim"]]
+type LayerActivationsDict = dict[str, Float[Array, [0.0]]]
 type Intermediates = dict[str, tuple[LayerActivations, ...] | "Intermediates"]
 
 
 class ReplayBufferSamples(NamedTuple):
-    observations: Float[Observation, " batch"]
-    actions: Float[Action, " batch"]
-    next_observations: Float[Observation, " batch"]
-    dones: Float[np.ndarray, "batch 1"]
-    rewards: Float[np.ndarray, "batch 1"]
+    observations: Float[Observation, 0.0]
+    actions: Float[Action, 0.0]
+    next_observations: Float[Observation, 0.0]
+    dones: Float[np.ndarray, 0.0]
+    rewards: Float[np.ndarray, 0.0]
 
 
 class Rollout(NamedTuple):
     # Standard timestep data
-    observations: Float[Observation, "timestep task"]
-    actions: Float[Action, "timestep task"]
-    rewards: Float[np.ndarray, "timestep task 1"]
-    dones: Float[np.ndarray, "timestep task 1"]
+    observations: Float[Observation, 0.0]
+    actions: Float[Action, 0.0]
+    rewards: Float[np.ndarray, 0.0]
+    dones: Float[np.ndarray, 0.0]
 
     # Auxiliary policy outputs
-    log_probs: Float[LogProb, "timestep task"] | None = None
-    means: Float[Action, "timestep task"] | None = None
-    stds: Float[Action, "timestep task"] | None = None
-    values: Float[np.ndarray, "timestep task 1"] | None = None
-    rnn_states: Float[RNNState, "timestep task"] | None = None
+    log_probs: Float[LogProb, 0.0] | None = None
+    means: Float[Action, 0.0] | None = None
+    stds: Float[Action, 0.0] | None = None
+    values: Float[np.ndarray, 0.0] | None = None
+    rnn_states: Float[RNNState, 0.0] | None = None
 
     # Computed statistics about observed rewards
-    returns: Float[np.ndarray, "timestep task 1"] | None = None
-    advantages: Float[np.ndarray, "timestep task 1"] | None = None
-    valids: Float[np.ndarray, "episode timestep 1"] | None = None
+    returns: Float[np.ndarray, 0.0] | None = None
+    advantages: Float[np.ndarray, 0.0] | None = None
+    valids: Float[np.ndarray, 0.0] | None = None
 
     @classmethod
     def from_list(cls, items: list) -> "Rollout":
