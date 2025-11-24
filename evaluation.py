@@ -535,7 +535,9 @@ def main():
     )
 
     if args.list_tasks:
-        AgentEvaluator(**{**evaluator_kwargs, "use_tensorboard": False}).list_available_tasks()
+        AgentEvaluator(
+            **{**evaluator_kwargs, "use_tensorboard": False}
+        ).list_available_tasks()
         return
 
     evaluator = AgentEvaluator(**evaluator_kwargs)
