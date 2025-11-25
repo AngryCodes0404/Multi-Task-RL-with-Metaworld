@@ -9,6 +9,7 @@ from dataclasses import dataclass
 import jax
 import numpy as np
 import orbax.checkpoint as ocp
+
 # wandb import removed - using TensorBoard only
 
 from checkpoint import (
@@ -69,9 +70,11 @@ class Run:
             ),
         )
         if checkpoint_manager.latest_step() is not None:
-            ckpt: Checkpoint = checkpoint_manager.restore(  # pyright: ignore [reportAssignmentType]
-                checkpoint_manager.latest_step(),
-                args=get_metadata_only_restore_args(),
+            ckpt: Checkpoint = (
+                checkpoint_manager.restore(  # pyright: ignore [reportAssignmentType]
+                    checkpoint_manager.latest_step(),
+                    args=get_metadata_only_restore_args(),
+                )
             )
             return ckpt["metadata"]
         else:
@@ -89,14 +92,16 @@ class Run:
             gpu_count = jax.device_count("gpu")
         except RuntimeError:
             gpu_count = 0
-        
+
         try:
             tpu_count = jax.device_count("tpu")
         except RuntimeError:
             tpu_count = 0
-            
+
         if gpu_count < 1 and tpu_count < 1:
-            print(f"Warning: No GPU/TPU found, using CPU. Available devices: {jax.devices()}")
+            print(
+                f"Warning: No GPU/TPU found, using CPU. Available devices: {jax.devices()}"
+            )
             print("Training will be slower on CPU, but will proceed...")
 
         envs = self.env.spawn(seed=self.seed)
@@ -143,14 +148,18 @@ class Run:
                     )
                 else:
                     rb = None
-                ckpt: Checkpoint = checkpoint_manager.restore(  # pyright: ignore [reportAssignmentType]
-                    checkpoint_manager.latest_step(),
-                    args=get_checkpoint_restore_args(algorithm, rb),
+                ckpt: Checkpoint = (
+                    checkpoint_manager.restore(  # pyright: ignore [reportAssignmentType]
+                        checkpoint_manager.latest_step(),
+                        args=get_checkpoint_restore_args(algorithm, rb),
+                    )
                 )
                 algorithm = ckpt["agent"]
 
                 if is_off_policy:
-                    buffer_checkpoint = ckpt["buffer"]  # pyright: ignore [reportTypedDictNotRequiredAccess]
+                    buffer_checkpoint = ckpt[
+                        "buffer"
+                    ]  # pyright: ignore [reportTypedDictNotRequiredAccess]
 
                 envs_checkpoint = ckpt["env_states"]
                 load_env_checkpoints(envs, envs_checkpoint)
