@@ -9,12 +9,10 @@ from .utils import name_prefix
 
 
 class MLP(nn.Module):
-    """A Flax Module to represent an MLP feature extractor."""
 
     head_dim: int
 
     depth: int = 3
-    # TODO: Support variable width?
     width: int = 400
 
     activation_fn: Callable[[jax.typing.ArrayLike], jax.Array] = jax.nn.relu
