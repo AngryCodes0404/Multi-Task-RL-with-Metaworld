@@ -15,8 +15,6 @@ class MultiHeadNetwork(nn.Module):
     normalize_layer: bool = False
     skip_connection: bool = False
 
-    # TODO: support variable width?
-
     @nn.compact
     def __call__(
         self,
@@ -49,7 +47,7 @@ class MultiHeadNetwork(nn.Module):
 
         x = nn.vmap(
             nn.Dense,
-            variable_axes={"params": 0},
+            variable_axes={"params": 2},
             split_rngs={"params": True},
             in_axes=None,  # pyright: ignore [reportArgumentType]
             out_axes=1,
@@ -59,7 +57,9 @@ class MultiHeadNetwork(nn.Module):
             kernel_init=self.head_kernel_init,
             bias_init=self.head_bias_init,
             use_bias=self.config.use_bias,
-        )(x)
+        )(
+            x
+        )
 
         # 3) Collect the output from the appropriate head for each input
         task_indices = task_idx.argmax(axis=-1)
