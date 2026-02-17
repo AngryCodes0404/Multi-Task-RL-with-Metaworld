@@ -21,7 +21,6 @@ class OptimizerConfig:
         return False
 
     def spawn(self) -> optax.GradientTransformation:
-        # From https://github.com/araffin/sbx/blob/master/sbx/ppo/policies.py#L120
         optim_kwargs = {}
         if self.optimizer == Optimizer.Adam:
             optim_kwargs["eps"] = 1e-5
