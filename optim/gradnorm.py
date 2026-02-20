@@ -10,26 +10,6 @@ from jaxtyping import Array, Float, PyTree
 if TYPE_CHECKING:
     from config.optim import OptimizerConfig
 
-# NOTE: GRADNORM ALGORITHM:
-# Initialize $w_i(0)=1 \forall i$
-# Initialize network weights $\mathcal{W}$
-# Pick value for $\alpha>0$ and pick the weights $W$ (usually the
-#     final layer of weights which are shared between tasks)
-# for $t=0$ to max_train_steps $^{-10}$
-#     Input batch $x_i$ to compute $L_i(t) \forall i$ and
-#         $L(t)=\sum_i w_i(t) L_i(t)$ [standard forward pass]
-#     Compute $G_W^{(i)}(t)$ and $r_i(t) \forall i$
-#     Compute $\bar{G}_W(t)$ by averaging the $G_W^{(i)}(t)$
-#     Compute $L_{\text {grad }}=\sum_i\left|G_W^{(i)}(t)-\bar{G}_W(t) \times\left[r_i(t)\right]^\alpha\right|_1$
-#     Compute GradNorm gradients $\nabla_{w_i} L_{\text {grad }}$, keeping
-#         targets $\bar{G}_W(t) \times\left[r_i(t)\right]^\alpha$ constant
-#     Compute standard gradients $\nabla_{\mathcal{W}} L(t)$
-#     Update $w_i(t) \mapsto w_i(t+1)$ using $\nabla_{w_i} L_{\text {grad }}$
-#     Update $\mathcal{W}(t) \mapsto \mathcal{W}(t+1)$ using $\nabla_{\mathcal{W}} L(t)$ [standard
-#         backward pass]
-#     Renormalize $w_i(t+1)$ so that $\sum_i w_i(t+1)=T$
-# end for
-
 
 class GradNormState(NamedTuple):
     opt_state: optax.OptState
@@ -119,4 +99,6 @@ def gradnorm(
 
         return weighted_updates, new_state
 
-    return optax.GradientTransformationExtraArgs(init_fn, update_fn)  # pyright: ignore [reportArgumentType]
+    return optax.GradientTransformationExtraArgs(
+        init_fn, update_fn
+    )  # pyright: ignore [reportArgumentType]
