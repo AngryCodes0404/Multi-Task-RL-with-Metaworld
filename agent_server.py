@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-"""
-Cap'n Proto RPC Server for Agent Interface.
-
-Receives observations as structured Observation messages containing Tensor entries
-so agents can work with both state vectors and rich sensory data without pickle.
-"""
-
 import asyncio
 import logging
 import os
@@ -21,8 +13,8 @@ agent_capnp = capnp.load(schema_file)
 logger = logging.getLogger(__name__)
 
 # Default network configuration
-DEFAULT_RPC_ADDRESS = "127.0.0.1"
-DEFAULT_RPC_PORT = 8000
+DEFAULT_RPC_ADDRESS = "0.0.0.0"
+DEFAULT_RPC_PORT = 8080
 
 _TRAVERSAL_WORDS = 100 * 1024 * 1024  # match client; tune appropriately
 
