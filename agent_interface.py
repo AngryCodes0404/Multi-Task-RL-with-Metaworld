@@ -1,9 +1,3 @@
-"""
-Abstract base class defining the standard interface for all agents.
-
-All miner-submitted agents must implement this interface to be evaluated.
-"""
-
 from abc import ABC, abstractmethod
 
 import gymnasium as gym
