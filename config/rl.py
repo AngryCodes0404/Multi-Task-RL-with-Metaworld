@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 @dataclass(frozen=True)
 class AlgorithmConfig:
     num_tasks: int
-    gamma: float = 0.99
+    gamma: float = 0.98
 
     def spawn(self, env: "EnvConfig", seed: int) -> "Algorithm":
         from rl.algorithms import get_algorithm_for_config
@@ -21,15 +21,14 @@ class AlgorithmConfig:
 @dataclass(frozen=True, kw_only=True)
 class TrainingConfig:
     total_steps: int
-    evaluation_frequency: int = 200_000 // 500
-    """Evaluation frequency in total environment episodes."""
+    evaluation_frequency: int = 250_000 // 500
 
 
 @dataclass(frozen=True)
 class OffPolicyTrainingConfig(TrainingConfig):
     warmstart_steps: int = int(4e3)
     buffer_size: int = int(1e6)
-    batch_size: int = 1280
+    batch_size: int = 640
 
 
 @dataclass(frozen=True)
