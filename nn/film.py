@@ -21,9 +21,6 @@ class FiLMNetwork(nn.Module):
         task_idx = x[..., -self.config.num_tasks :]
         x = x[..., : -self.config.num_tasks]
 
-        # Task Encoder
-        # TODO: This should be replaced with a pretrained NLP model eventually
-        # for language description embeddings
         task_embedding = nn.Embed(
             num_embeddings=self.config.num_tasks,
             features=self.config.embedding_dim,
