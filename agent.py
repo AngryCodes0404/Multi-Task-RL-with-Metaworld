@@ -36,21 +36,7 @@ class RLAgent(AgentInterface):
         num_tasks: int = 50,
         task_name: Optional[str] = None,
     ):
-        """
-        Initialize the PPO agent.
 
-        Args:
-            observation_space: Environment observation space
-            action_space: Environment action space
-            seed: Random seed for reproducibility
-            max_episode_steps: Maximum steps per episode
-            model_path: Path to trained model checkpoint (auto-detected if None)
-            num_tasks: Number of tasks for multi-task learning
-            task_name: Optional override indicating the specific MetaWorld task the
-                agent is being evaluated on. When provided, the agent will append
-                the corresponding one-hot encoding expected by MT10 checkpoints if
-                the observation is missing it.
-        """
         super().__init__(observation_space, action_space, seed)
 
         self.max_episode_steps = max_episode_steps
