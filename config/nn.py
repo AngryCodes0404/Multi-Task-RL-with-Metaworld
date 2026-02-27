@@ -14,11 +14,9 @@ class NeuralNetworkConfig:
 
     kernel_init: Initializer = Initializer.HE_UNIFORM
     """The initializer to use for hidden layer weights."""
-    # TODO: How to pass arguments to kernel_init
 
     bias_init: Initializer = Initializer.ZEROS
     """The initializer to use for hidden layer biases."""
-    # TODO: How to pass arguments to bias_init
 
     use_bias: bool = True
     """Whether or not to use bias terms across the network."""
@@ -94,7 +92,7 @@ class SoftModulesConfig(NeuralNetworkConfig):
     """The number of modules to use in each Base Policy Network layer."""
     # 2 for MT10, 4 for MT50
 
-    embedding_dim: int = 400
+    embedding_dim: int = 200
     """The dimension of the observation / task index embedding. `D` in the paper."""
 
 
