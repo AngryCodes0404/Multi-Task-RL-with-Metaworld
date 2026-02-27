@@ -32,12 +32,12 @@ class MetaworldConfig(EnvConfig):
     @override
     def observation_space(self) -> gym.Space:
         _HAND_SPACE = gym.spaces.Box(
-            np.array([-0.525, 0.348, -0.0525]),
-            np.array([+0.525, 1.025, 0.7]),
+            np.array([-0.532, 0.368, -0.0532]),
+            np.array([+0.532, 1.023, 0.7]),
             dtype=np.float64,
         )
 
-        goal_low = (-0.1, 0.85, 0.0)
+        goal_low = (-0.1, 0.82, 0.0)
         goal_high = (0.1, 0.9 + 1e-7, 0.0)
 
         goal_space = gym.spaces.Box(
