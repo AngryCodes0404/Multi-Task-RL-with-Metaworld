@@ -11,7 +11,7 @@ def CompositionalDense(num_parameter_sets: int):
         variable_axes={"params": 0},
         split_rngs={"params": True},
         in_axes=None,  # pyright: ignore [reportArgumentType]
-        out_axes=-2,
+        out_axes=-1,
         axis_size=num_parameter_sets,
     )
 
